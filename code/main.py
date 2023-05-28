@@ -8,7 +8,7 @@ class Game:
 		# general setup
 		pygame.init()
 		self.screen = pygame.display.set_mode((WIDTH,HEIGTH))
-		pygame.display.set_caption('Projekt Klimat')
+		pygame.display.set_caption('Primo Terra')
 		self.clock = pygame.time.Clock()
 
 		self.level = Level()
