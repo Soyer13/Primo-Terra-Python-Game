@@ -8,6 +8,7 @@ from debug import debug
 from support import *
 from random import choice
 from enemy import Enemy
+from weapon import Weapon
 
 
 class Level:
@@ -15,7 +16,12 @@ class Level:
 
 		# get the display surface 
 		self.display_surface = pygame.display.get_surface()
-
+  
+		# attack sprites
+		self.current_attack = None
+		self.attack_sprites = pygame.sprite.Group()
+		self.attackable_sprites = pygame.sprite.Group()
+  
 		# sprite group setup
 		self.visible_sprites = YSortCamerGroup()
 		self.obstacle_sprites = pygame.sprite.Group()
@@ -45,7 +51,11 @@ class Level:
 							Tile((x,y),[self.obstacle_sprites],'invisible')
 						if style == 'grass':
 							random_grass_image = choice(graphics['grass'])
-							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'grass',random_grass_image)
+							Tile(
+								(x,y),
+								[self.visible_sprites,self.obstacle_sprites,self.attackable_sprites],
+								'grass',
+								random_grass_image)
 
 						if style == 'object':
 							surf = graphics['objects'][int(col)]
@@ -53,22 +63,56 @@ class Level:
 
 						if style == 'entities':
 							if col == '394':
-								self.player = Player((x,y),[self.visible_sprites],self.obstacle_sprites)
+								self.player = Player((x,y),
+									[self.visible_sprites],
+									self.obstacle_sprites,
+									self.create_attack,
+									self.destroy_attack)
 							else:
 								if col == '390': monster_name = 'bamboo'
 								elif col == '391': monster_name = 'spirit'
 								elif col == '392': monster_name = 'raccoon'
 								else: monster_name = 'squid'
-								Enemy(monster_name,(x,y),[self.visible_sprites],self.obstacle_sprites)
-       
-       
+								Enemy(
+									monster_name,
+									(x,y),
+									[self.visible_sprites,self.attackable_sprites],
+									self.obstacle_sprites,
+									self.damage_player)
+        
+	def create_attack(self):
+		self.current_attack = Weapon(self.player,[self.visible_sprites,self.attack_sprites])
+  
+	def destroy_attack(self):
+			if self.current_attack:
+				self.current_attack.kill()
+			self.current_attack = None
+   
+	def player_attack_logic(self):
+		if self.attack_sprites:
+			for attack_sprite in self.attack_sprites:
+				collision_sprites = pygame.sprite.spritecollide(attack_sprite,self.attackable_sprites,False)
+				if collision_sprites:
+					for target_sprite in collision_sprites:
+						if target_sprite.sprite_type == 'grass':
+							target_sprite.kill()
+						else:
+							target_sprite.get_damage(self.player,attack_sprite.sprite_type)
+
+	def damage_player(self,amount,attack_type):
+		if self.player.vulnerable:
+			self.player.health -= amount
+			self.player.vulnerable = False
+			self.player.hurt_time = pygame.time.get_ticks()
+			# spawn particles
 
 	def run(self):
 		# update and draw the game
 		self.visible_sprites.custom_draw(self.player)
 		self.visible_sprites.update()
 		self.visible_sprites.enemy_update(self.player)
-		#debug(self.player.direction)
+		self.player_attack_logic()
+		#self.ui.display(self.player)
 
 class YSortCamerGroup(pygame.sprite.Group):
 	def __init__(self):
