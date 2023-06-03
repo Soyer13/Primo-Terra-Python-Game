@@ -71,8 +71,12 @@ class Enemy(Entety):
             if self.status != 'attack':
                 self.frame_index = 0
             self.status = 'attack'
+        #ustawienie aby przecownik nie wchodził w gracza (nie całkowiecie przynajmneij)
+        elif distance <= 50:
+            self.status = 'idle'
         elif distance <= self.notice_radius:
             self.status = 'move'
+        
         else:
             self.status = 'idle'
             
