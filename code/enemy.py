@@ -9,10 +9,12 @@ class Enemy(Entety):
         #general set up
         super().__init__(groups)
         self.sprite_type = 'enemy'
-        #graphic set up
+
+        # graphics setup
         self.import_graphics(monster_name)
         self.status = 'idle'
         self.image = self.animations[self.status][self.frame_index]
+
         
         #ruch
         self.rect = self.image.get_rect(topleft = pos)
