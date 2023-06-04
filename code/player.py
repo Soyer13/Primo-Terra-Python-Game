@@ -2,6 +2,7 @@ import pygame
 from settings import *
 from support import import_folder
 from math import sin
+from ui import UI
 
 
 class Player(pygame.sprite.Sprite):
@@ -36,9 +37,10 @@ class Player(pygame.sprite.Sprite):
 		self.weapon_switch_time = None
 		self.switch_duration_cooldown = 200
   
+  
 		# stats
-		self.stats = {'health': 100,'energy':60,'attack': 10}
-		self.health = self.stats['health'] * 0.5
+		self.stats = {'health': 100,'attack': 10}
+		self.health = self.stats['health'] 
 		self.exp = 123
 		self.speed = 7
 		# damage timer
@@ -194,6 +196,12 @@ class Player(pygame.sprite.Sprite):
 			return 255
 		else: 
 			return 0
+
+	def isPlayerDead(self):
+		if self.health <= 0:
+			self.kill()
+			
+			
   
 	def update(self):
 		self.input()
@@ -201,3 +209,4 @@ class Player(pygame.sprite.Sprite):
 		self.get_status()
 		self.animate()
 		self.move(self.speed)
+		self.isPlayerDead()

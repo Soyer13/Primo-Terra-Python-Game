@@ -9,7 +9,7 @@ from support import *
 from random import choice
 from enemy import Enemy
 from weapon import Weapon
-
+from ui import UI
 
 class Level:
 	def __init__(self):
@@ -28,6 +28,9 @@ class Level:
 
 		# sprite setup
 		self.create_map()
+  
+		# user interface 
+		self.ui = UI()
 
 	def create_map(self):
 		layouts = {
@@ -112,7 +115,7 @@ class Level:
 		self.visible_sprites.update()
 		self.visible_sprites.enemy_update(self.player)
 		self.player_attack_logic()
-		#self.ui.display(self.player)
+		self.ui.display(self.player)
 
 class YSortCamerGroup(pygame.sprite.Group):
 	def __init__(self):
