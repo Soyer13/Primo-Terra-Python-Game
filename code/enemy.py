@@ -129,9 +129,11 @@ class Enemy(Entety):
             self.hit_time = pygame.time.get_ticks()
             self.vulnerable = False
 
-    def check_death(self):
+    def check_death(self,player):
         if self.health <= 0:
             self.kill()
+            if player.health < 100:
+                player.health += 5
 
     def hit_reaction(self):
         if not self.vulnerable:
@@ -143,8 +145,9 @@ class Enemy(Entety):
         self.move(self.speed)
         self.animate()
         self.cooldowns()
-        self.check_death()
+        #self.check_death(player)
     
     def enemy_update(self,player):
         self.get_status(player)
         self.actions(player)
+        self.check_death(player)
