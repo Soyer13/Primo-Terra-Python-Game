@@ -10,7 +10,7 @@ from random import choice
 from enemy import Enemy
 from weapon import Weapon
 from ui import UI
-
+from debug import debug
 class Level:
 	def __init__(self):
 
@@ -117,6 +117,7 @@ class Level:
 		self.player_attack_logic()
 		self.ui.display(self.player)
 		self.ui.displayDead(self.player.isDead)
+		debug(self.player.health)
 
 class YSortCamerGroup(pygame.sprite.Group):
 	def __init__(self):

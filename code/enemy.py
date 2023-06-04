@@ -33,6 +33,7 @@ class Enemy(Entety):
         self.attack_radius = monster_info['attack_radius']
         self.notice_radius = monster_info['notice_radius']
         self.attack_type = monster_info['attack_type']
+        self.health_recovered = monster_info['health_recovered']
         
         # player interaction
         self.can_attack = True
@@ -133,7 +134,11 @@ class Enemy(Entety):
         if self.health <= 0:
             self.kill()
             if player.health < 100:
-                player.health += 5
+                if player.health + self.health_recovered < 100:
+                    player.health += self.health_recovered
+                else:
+                    player.health = 100
+                        
 
     def hit_reaction(self):
         if not self.vulnerable:
