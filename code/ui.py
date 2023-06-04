@@ -38,21 +38,22 @@ class UI:
   
   
 	def show_Dead(self):
-		text_surf = self.font.render(str('Dead'),False,TEXT_COLOR)
-		x = self.display_surface.get_size()[0] - 20
-		y = self.display_surface.get_size()[1] - 20
+		text_surf = self.font.render(str('KONIEC'),False,TEXT_COLOR)
+		x = self.display_surface.get_size()[0] /1.5
+		y = self.display_surface.get_size()[1] /1.7
 		text_rect = text_surf.get_rect(bottomright = (x,y))
 
-		pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
+		pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(40,40))
 		self.display_surface.blit(text_surf,text_rect)
-		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),3)
+		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(40,40),3)
 
 
 
 	def display(self,player):
 		self.show_bar(player.health,player.stats['health'],self.health_bar_rect,HEALTH_COLOR)
 
-	def displayDead(self):
-		self.show_Dead()
+	def displayDead(self,isDead):
+		if isDead == True:
+			self.show_Dead()
 
 

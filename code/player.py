@@ -36,7 +36,7 @@ class Player(pygame.sprite.Sprite):
 		self.can_switch_weapon = True
 		self.weapon_switch_time = None
 		self.switch_duration_cooldown = 200
-  
+		self.isDead = False
   
 		# stats
 		self.stats = {'health': 100,'attack': 10}
@@ -200,6 +200,7 @@ class Player(pygame.sprite.Sprite):
 	def isPlayerDead(self):
 		if self.health <= 0:
 			self.kill()
+			self.isDead = True
 			
 			
   
