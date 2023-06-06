@@ -17,8 +17,9 @@ class Game:
 	
 	def run(self):
 		#tworzenuie tła
-		self.floor_surf = pygame.image.load('../graphics/MainWallPaper.png').convert()
-		self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
+		self.MianBC_surf = pygame.image.load('../graphics/MainWallPaper.png').convert()
+		self.MianBC_surf = pygame.transform.scale(self.MianBC_surf, (WIDTH, HEIGTH))
+		self.MainBC_rect = self.MianBC_surf.get_rect(topleft = (0,0))
 
 		
   
@@ -38,7 +39,7 @@ class Game:
 
 			self.screen.fill('black')
 			#Wyświetlanie tła
-			self.screen.blit(self.floor_surf,self.floor_rect)
+			self.screen.blit(self.MianBC_surf,self.MainBC_rect)
 			#Menu Główne
 			if isStart == False:
 				self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
