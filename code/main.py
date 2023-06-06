@@ -16,6 +16,13 @@ class Game:
 		self.level = Level()
 	
 	def run(self):
+		#tworzenuie tła
+		self.floor_surf = pygame.image.load('../graphics/MainWallPaper.png').convert()
+		self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
+
+		
+  
+  
 		PrimoTerra_surf = self.font.render(str('Primo Terra'),False,'#6AF468')
 		PrimowTerra_rect = PrimoTerra_surf.get_rect(center=(WIDTH / 2, HEIGTH/6))
 		Start_img = pygame.image.load('../graphics/buttons/Start.png').convert_alpha()
@@ -30,6 +37,8 @@ class Game:
 					sys.exit()
 
 			self.screen.fill('black')
+			#Wyświetlanie tła
+			self.screen.blit(self.floor_surf,self.floor_rect)
 			#Menu Główne
 			if isStart == False:
 				self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
