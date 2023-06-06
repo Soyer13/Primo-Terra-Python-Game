@@ -117,7 +117,7 @@ class Level:
 		self.player_attack_logic()
 		self.ui.display(self.player)
 		self.ui.displayDead(self.player.isDead)
-		debug(self.player.health)
+		debug(self.player.health,10,0)
 
 class YSortCamerGroup(pygame.sprite.Group):
 	def __init__(self):

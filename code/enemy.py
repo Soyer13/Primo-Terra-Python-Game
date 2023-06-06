@@ -76,8 +76,7 @@ class Enemy(Entety):
         elif distance <= 50:
             self.status = 'idle'
         elif distance <= self.notice_radius:
-            self.status = 'move'
-        
+            self.status = 'move'        
         else:
             self.status = 'idle'
             
