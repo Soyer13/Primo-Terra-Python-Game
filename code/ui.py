@@ -3,7 +3,6 @@ from settings import *
 from player import *
 from button import Button
 
-
 class UI:
 	def __init__(self):
 		
@@ -40,8 +39,8 @@ class UI:
   
   
 	def show_Dead(self):
-		Restart_img = pygame.image.load('../graphics/buttons/Start.png').convert_alpha()
-		Restart_Button =Button(WIDTH / 2.3, HEIGTH/3.6, Restart_img, 0.8)
+		Restart_img = pygame.image.load('../graphics/buttons/Restart.png').convert_alpha()
+		Restart_Button =Button(WIDTH / 2.5, HEIGTH/1.8, Restart_img, 0.8)
   
 		text_surf = self.font.render(str('KONIEC'),False,TEXT_COLOR)
 		x = self.display_surface.get_size()[0] /1.5
@@ -52,9 +51,9 @@ class UI:
 		self.display_surface.blit(text_surf,text_rect)
 		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(40,40),3)
   
-	'''	if Restart_Button.draw(game.screen):
-			game = Game()
-			game.run()'''
+		if Restart_Button.draw(self.display_surface):
+			pass
+			
 					
 
 
