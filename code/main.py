@@ -31,6 +31,12 @@ class Game:
 					isStart = True
 			if isStart == True:
 				self.level.run()
+    
+			if self.level.player.isDead == True:
+				Restart_img = pygame.image.load('../graphics/buttons/Restart.png').convert_alpha()
+				Restart_Button =Button(WIDTH / 2.5, HEIGTH/1.8, Restart_img, 0.8)
+				if Restart_Button.draw(self.screen):
+					self.level = Level()
 			pygame.display.update()
 			self.clock.tick(FPS)
 
