@@ -39,5 +39,5 @@ Advice_menu = ['Oszczędzaj energię!',
                'Praktykuj segregację odpadów i recykling!','Unikaj marnowania jedzenia i dbaj o to, aby kupować i spożywać tylko tyle, ile jest niezbędne!',
                'Edukuj innych na temat ekologii!',
                'Oszczędzaj wodę!',
-               'Nie marnowania jedzenia !',
+               'Nie marnowaniuj jedzenia !',
                'WIECEJ DRZEW WIECEJ KWIATÓW !!']
