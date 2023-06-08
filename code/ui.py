@@ -49,19 +49,46 @@ class UI:
 		self.display_surface.blit(text_surf,text_rect)
 		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(40,40),3)
 
-	def show_interactions(self,pos):
+	def show_interactions(self):
 			text_surf = self.Gamefont.render(str('E'),False,TEXT_COLOR)
 
 			'''screen_pos = (pos[0] , pos[1] + 100)
 			text_rect = text_surf.get_rect(bottomright = screen_pos)'''
-			x = self.display_surface.get_size()[0] /10
-			y = self.display_surface.get_size()[1] /1.7
+			x = self.display_surface.get_size()[0] /13
+			y = self.display_surface.get_size()[1] /1.5
 			text_rect = text_surf.get_rect(bottomright = (x,y))
 
 			pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
 			self.display_surface.blit(text_surf,text_rect)
 			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)
-			
+   
+	def displayGameControls(self):
+			'''text_surfW = self.Gamefont.render(str('W'),False,TEXT_COLOR)
+			text_surfA = self.Gamefont.render(str('W'),False,TEXT_COLOR)
+			text_surfS = self.Gamefont.render(str('W'),False,TEXT_COLOR)
+			text_surfD = self.Gamefont.render(str('W'),False,TEXT_COLOR)
+			text_surfSPACE = self.Gamefont.render(str('W'),False,TEXT_COLOR)
+			posW = (self.display_surface.get_size()[0] /10,self.display_surface.get_size()[1] /1.4)
+			text_rect = text_surfW.get_rect(bottomright = posW)
+
+			pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
+			self.display_surface.blit(text_surfW,text_rect)
+			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)'''
+   
+			self.KEYS('W',13,1.3)
+			self.KEYS('A',20,1.2)
+			self.KEYS('S',13,1.2)
+			self.KEYS('D',9.6,1.2)
+			self.KEYS('     ',10,1.112)
+   
+	def KEYS(self,name ,x,y):
+		text_surf = self.Gamefont.render(str(name),False,TEXT_COLOR)
+		pos = (self.display_surface.get_size()[0] /x,self.display_surface.get_size()[1] /y)
+		text_rect = text_surf.get_rect(bottomright = pos)
+  
+		pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
+		self.display_surface.blit(text_surf,text_rect)
+		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)	
 	def display(self,player):
 		self.show_bar(player.health,player.stats['health'],self.health_bar_rect,HEALTH_COLOR)
 

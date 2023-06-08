@@ -71,7 +71,7 @@ class NPC(Entety):
             self.status = 'idle'
         elif distance <= self.notice_radius:
             #self.status = 'move'
-            self.ui.show_interactions(self.pos)
+            self.ui.show_interactions()
             print('interakcja')
         else:
             self.status = 'idle'

@@ -48,7 +48,7 @@ class Player(pygame.sprite.Sprite):
 		self.hurt_time = None
 		self.invulnerability_duration = 500
 
-
+		self.ui = UI()
 	def import_player_assets(self):
 		character_path = '../graphics/player/'
 		self.animations = {'up': [],'down': [],'left': [],'right': [],
@@ -211,3 +211,4 @@ class Player(pygame.sprite.Sprite):
 		self.animate()
 		self.move(self.speed)
 		self.isPlayerDead()
+		self.ui.displayGameControls()
