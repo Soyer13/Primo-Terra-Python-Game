@@ -13,7 +13,7 @@ class Game:
 		pygame.display.set_caption('Primo Terra')
 		self.clock = pygame.time.Clock()
 		self.font = pygame.font.Font(UI_FONT,UI_FONT_SIZE)
-		self.font_advice = pygame.font.Font(UI_FONT,14)
+		self.font_advice = pygame.font.Font(UI_FONT,16)
 		self.Button_Font = pygame.font.Font(UI_FONT,80)
 
 		self.level = Level()
@@ -61,7 +61,7 @@ class Game:
 		while True:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					pygame.quit()
+					pygame.quit() 
 					sys.exit()
 
 			self.screen.fill('black') 

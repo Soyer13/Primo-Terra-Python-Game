@@ -1,4 +1,3 @@
-from typing import Any
 import pygame
 from settings import *
 from entity import Entety

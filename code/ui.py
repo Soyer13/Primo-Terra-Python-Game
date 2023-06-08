@@ -9,6 +9,7 @@ class UI:
 		# general 
 		self.display_surface = pygame.display.get_surface()
 		self.font = pygame.font.Font(UI_FONT,UI_FONT_SIZE)
+		self.Gamefont = pygame.font.Font(Game_FONT,Game_FONT_SIZE)
 
 		# bar setup 
 		self.health_bar_rect = pygame.Rect(10,10,HEALTH_BAR_WIDTH,BAR_HEIGHT)
@@ -39,8 +40,6 @@ class UI:
   
   
 	def show_Dead(self):
-		
-  
 		text_surf = self.font.render(str('KONIEC'),False,TEXT_COLOR)
 		x = self.display_surface.get_size()[0] /1.5
 		y = self.display_surface.get_size()[1] /1.7
@@ -49,13 +48,15 @@ class UI:
 		pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(40,40))
 		self.display_surface.blit(text_surf,text_rect)
 		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(40,40),3)
-  
-		
-			
-					
 
+	def show_interactions(self,pos):
+			text_surf = self.Gamefont.render(str('E'),False,TEXT_COLOR)
 
+			text_rect = text_surf.get_rect(bottomright = pos)
 
+			pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(10,10))
+			self.display_surface.blit(text_surf,text_rect)
+			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(10,10),2)
 	def display(self,player):
 		self.show_bar(player.health,player.stats['health'],self.health_bar_rect,HEALTH_COLOR)
 

@@ -11,6 +11,8 @@ ENERGY_BAR_WIDTH = 140
 ITEM_BOX_SIZE = 80
 UI_FONT = '../graphics/font/joystix.ttf'
 UI_FONT_SIZE = 90
+Game_FONT = '../graphics/font/joystix.ttf'
+Game_FONT_SIZE = 18
 
 # general colors
 WATER_COLOR = '#71ddee'
@@ -33,6 +35,9 @@ monster_data = {
 	'raccoon': {'health': 300,'exp':250,'damage':40,'attack_type': 'claw',  'attack_sound':'../audio/attack/claw.wav','speed': 2, 'resistance': 3, 'attack_radius': 120, 'notice_radius': 400,'health_recovered': 100},
 	'spirit': {'health': 100,'exp':110,'damage':8,'attack_type': 'thunder', 'attack_sound':'../audio/attack/fireball.wav', 'speed': 4, 'resistance': 3, 'attack_radius': 60, 'notice_radius': 350,'health_recovered': 10},
 	'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'../audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300,'health_recovered': 5}}
+
+npc_data = {
+	'ROBOT': {'health': 100, 'speed': 3,  'notice_radius': 360,}}
 
 Advice_menu = ['Oszczędzaj energię!',
                'Unikaj plastikowych opakowań i wybieraj produkty o minimalnym wpływie na środowisko!',
