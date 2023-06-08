@@ -41,7 +41,6 @@ class Player(pygame.sprite.Sprite):
 		# stats
 		self.stats = {'health': 100,'attack': 10}
 		self.health = self.stats['health'] 
-		self.exp = 123
 		self.speed = 7
 		# damage timer
 		self.vulnerable = True
@@ -59,7 +58,7 @@ class Player(pygame.sprite.Sprite):
 			full_path = character_path + animation
 			self.animations[animation] = import_folder(full_path)
      
-     
+     		
 	def input(self):
 		if not self.attacking:
 			keys = pygame.key.get_pressed()
@@ -178,8 +177,12 @@ class Player(pygame.sprite.Sprite):
 		if self.frame_index >= len(animation):
 			self.frame_index = 0
 
-		# set the image
+		# ustawienie grafiki gtacza
 		self.image = animation[int(self.frame_index)]
+		scale = 3.5
+		width = self.image.get_width()
+		height = self.image.get_height()
+		self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
 		self.rect = self.image.get_rect(center = self.hitbox.center)
 
 		# flicker 
