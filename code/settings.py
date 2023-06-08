@@ -37,7 +37,7 @@ monster_data = {
 	'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'../audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300,'health_recovered': 5}}
 
 npc_data = {
-	'ROBOT': {'health': 100, 'speed': 3,  'notice_radius': 360,}}
+	'ROBOT': {'health': 100, 'speed': 3,  'notice_radius': 120,}}
 
 Advice_menu = ['Oszczędzaj energię!',
                'Unikaj plastikowych opakowań i wybieraj produkty o minimalnym wpływie na środowisko!',

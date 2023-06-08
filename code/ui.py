@@ -52,11 +52,16 @@ class UI:
 	def show_interactions(self,pos):
 			text_surf = self.Gamefont.render(str('E'),False,TEXT_COLOR)
 
-			text_rect = text_surf.get_rect(bottomright = pos)
+			'''screen_pos = (pos[0] , pos[1] + 100)
+			text_rect = text_surf.get_rect(bottomright = screen_pos)'''
+			x = self.display_surface.get_size()[0] /10
+			y = self.display_surface.get_size()[1] /1.7
+			text_rect = text_surf.get_rect(bottomright = (x,y))
 
-			pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(10,10))
+			pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
 			self.display_surface.blit(text_surf,text_rect)
-			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(10,10),2)
+			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)
+			
 	def display(self,player):
 		self.show_bar(player.health,player.stats['health'],self.health_bar_rect,HEALTH_COLOR)
 

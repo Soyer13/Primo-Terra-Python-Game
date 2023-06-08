@@ -83,7 +83,7 @@ class Level:
 									[self.visible_sprites,self.attackable_sprites],
 									self.obstacle_sprites,
 									self.damage_player)
-		NPC('ROBOT',(1400,900),[self.visible_sprites,self.obstacle_sprites],self.obstacle_sprites)
+		NPC('ROBOT',(2000,1200),[self.visible_sprites,self.obstacle_sprites],self.obstacle_sprites,self.player)
         
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites,self.attack_sprites])

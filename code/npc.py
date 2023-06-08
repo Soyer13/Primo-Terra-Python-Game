@@ -5,7 +5,7 @@ from ui import UI
 from support import *
 
 class NPC(Entety):
-    def __init__(self, npc_name,pos,groups,obstacle_sprites):
+    def __init__(self, npc_name,pos,groups,obstacle_sprites,player):
         #general set up
         super().__init__(groups)
         self.sprite_type = 'npc'
@@ -14,6 +14,8 @@ class NPC(Entety):
         self.status = 'idle'
         self.image = self.animations[self.status][self.frame_index]
 
+        #interakcje
+        self.ui = UI()
         
         #ruch
         self.rect = self.image.get_rect(topleft = pos)
@@ -29,6 +31,7 @@ class NPC(Entety):
         self.notice_radius = npc_info['notice_radius']
 
         self.pos = pos
+        self.player = player
         ''' # player interaction
         self.can_attack = True
         self.attack_time = None
@@ -68,7 +71,8 @@ class NPC(Entety):
             self.status = 'idle'
         elif distance <= self.notice_radius:
             #self.status = 'move'
-            pass 
+            self.ui.show_interactions(self.pos)
+            print('interakcja')
         else:
             self.status = 'idle'
             self.interactionStatus = False
@@ -104,9 +108,7 @@ class NPC(Entety):
     def update(self):
         self.move(self.speed)
         self.animate()
-
-    
-    def enemy_update(self,player):
-        self.get_status(player)
-        self.actions(player)
+        self.get_status(self.player)
+        self.actions(self.player)
         
+    
