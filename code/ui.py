@@ -57,8 +57,21 @@ class UI:
 			x = self.display_surface.get_size()[0] /13
 			y = self.display_surface.get_size()[1] /1.5
 			text_rect = text_surf.get_rect(bottomright = (x,y))
+   
+			isE = False
+			keys = pygame.key.get_pressed()
+			if keys[pygame.K_e]:
+				isE =True
+				print('interakcja')
+			else:
+				isE = False
+    
+			if isE  == True:
+				Color = '#6e6867'
+			else:
+				Color = UI_BG_COLOR
 
-			pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
+			pygame.draw.rect(self.display_surface,Color,text_rect.inflate(20,20))
 			self.display_surface.blit(text_surf,text_rect)
 			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)
    
@@ -74,19 +87,50 @@ class UI:
 			pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
 			self.display_surface.blit(text_surfW,text_rect)
 			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)'''
+
+			keys = pygame.key.get_pressed()
+			isW = False
+			isA = False
+			isS = False
+			isD = False
+			isSPACE = False
+			self.isE = False
+			# movement input
+			if keys[pygame.K_w]:
+				isW = True
+			elif keys[pygame.K_s]:
+				isS = True
+			elif keys[pygame.K_d]:
+				isD = True
+			elif keys[pygame.K_a]:
+				isA = True
+			elif keys[pygame.K_SPACE]:
+				isSPACE = True
+			else:
+				isW = False
+				isA = False
+				isS = False
+				isD = False
+				isSPACE = False
+				self.isE = False
+
+
+			self.KEYS('W',13,1.3,isW)
+			self.KEYS('A',20,1.2,isA)
+			self.KEYS('S',13,1.2,isS)
+			self.KEYS('D',9.6,1.2,isD)
+			self.KEYS('     ',10,1.112,isSPACE)
    
-			self.KEYS('W',13,1.3)
-			self.KEYS('A',20,1.2)
-			self.KEYS('S',13,1.2)
-			self.KEYS('D',9.6,1.2)
-			self.KEYS('     ',10,1.112)
+	def KEYS(self,name ,x,y,isPress = False):
+		Color = UI_BG_COLOR
+		if isPress == True:
+			Color = '#6e6867'
    
-	def KEYS(self,name ,x,y):
 		text_surf = self.Gamefont.render(str(name),False,TEXT_COLOR)
 		pos = (self.display_surface.get_size()[0] /x,self.display_surface.get_size()[1] /y)
 		text_rect = text_surf.get_rect(bottomright = pos)
   
-		pygame.draw.rect(self.display_surface,UI_BG_COLOR,text_rect.inflate(20,20))
+		pygame.draw.rect(self.display_surface,Color,text_rect.inflate(20,20))
 		self.display_surface.blit(text_surf,text_rect)
 		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)	
 	def display(self,player):
