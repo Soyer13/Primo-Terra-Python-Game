@@ -10,6 +10,7 @@ class UI:
 		self.display_surface = pygame.display.get_surface()
 		self.font = pygame.font.Font(UI_FONT,UI_FONT_SIZE)
 		self.Gamefont = pygame.font.Font(Game_FONT,Game_FONT_SIZE)
+		self.massagefont = pygame.font.Font(Game_FONT,16)
 
 		# bar setup 
 		self.health_bar_rect = pygame.Rect(10,10,HEALTH_BAR_WIDTH,BAR_HEIGHT)
@@ -74,6 +75,20 @@ class UI:
 			pygame.draw.rect(self.display_surface,Color,text_rect.inflate(20,20))
 			self.display_surface.blit(text_surf,text_rect)
 			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)
+			return isE
+	def show_message_bubble(self,message,name = 'Prob'):
+		print(message)
+		text_surf = self.massagefont.render(str(name + ': ' +message),False,TEXT_COLOR)
+		x = 20
+		y = self.display_surface.get_size()[1] - 20
+		text_rect = text_surf.get_rect(bottomleft = (x,y))
+		
+		color = '#6e6968'
+		
+		pygame.draw.rect(self.display_surface,color,text_rect.inflate(self.display_surface.get_size()[0],60))
+		self.display_surface.blit(text_surf,text_rect)
+		pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(self.display_surface.get_size()[0],60),3)
+
    
 	def displayGameControls(self):
 			'''text_surfW = self.Gamefont.render(str('W'),False,TEXT_COLOR)

@@ -3,6 +3,7 @@ from settings import *
 from entity import Entety
 from ui import UI
 from support import *
+import random
 
 class NPC(Entety):
     def __init__(self, npc_name,pos,groups,obstacle_sprites,player):
@@ -29,6 +30,7 @@ class NPC(Entety):
         self.health = npc_info['health']
         self.speed = npc_info['speed']
         self.notice_radius = npc_info['notice_radius']
+        self.i = random.randint(0, len(Advice_menu) -1)
 
         self.pos = pos
         self.player = player
@@ -42,7 +44,7 @@ class NPC(Entety):
         self.vulnerable = True
         self.hit_time = None
         self.invincibility_duration = 300'''
-    
+        self.Gamefont = pygame.font.Font(Game_FONT,Game_FONT_SIZE)
     def import_graphics(self,name):
         #self.animations = {'idle':[],'move':[],'attack':[]}
         self.animations = {'idle':[]}
@@ -70,9 +72,14 @@ class NPC(Entety):
         if distance <= 50:
             self.status = 'idle'
         elif distance <= self.notice_radius:
-            #self.status = 'move'
-            self.ui.show_interactions()
-            
+            #self.status = 'move'       
+            isE = self.ui.show_interactions()
+            if isE == True:
+                
+                self.ui.show_message_bubble(Advice_menu[self.i],self.npc_name)
+                print('wyswietla') 
+
+                     
         else:
             self.status = 'idle'
             self.interactionStatus = False
@@ -103,7 +110,7 @@ class NPC(Entety):
         else:
             self.image.set_alpha(255)'''
             
-    
+   
             
     def update(self):
         self.move(self.speed)
