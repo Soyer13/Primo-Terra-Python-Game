@@ -72,6 +72,7 @@ class Level:
 								random_grass_image)
 
 						if style == 'object':
+
 							# co = graphics['objects'][27]
 							# print(x)
 							
@@ -83,6 +84,9 @@ class Level:
 							#print(graphics['objects'][int(col)],"daedjoi")
 							surf = graphics['objects'][int(col)] 
 						
+							print(col)
+							surf = graphics['objects'][int(col)]
+
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 
 						if style == 'entities':

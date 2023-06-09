@@ -1,5 +1,5 @@
 # game setup
-WIDTH    = 1280	
+WIDTH    = 1280
 HEIGTH   = 720
 FPS      = 60
 TILESIZE = 64
@@ -33,6 +33,7 @@ UI_BORDER_COLOR_ACTIVE = 'gold'
 #Poziom Głośności 
 SoundEffectVolume = 0.2
 MusicVolume = 0.4
+
 #Bron 
 weapon_data = {'sword': {'cooldown': 100, 'damage': 15,'graphic':'../graphics/weapons/sword/full.png'}}
 
