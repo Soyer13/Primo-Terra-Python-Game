@@ -69,6 +69,7 @@ class Level:
 								random_grass_image)
 
 						if style == 'object':
+							print(col)
 							surf = graphics['objects'][int(col)]
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 
