@@ -2,6 +2,8 @@ import pygame, sys
 from settings import *
 from level import Level
 from button import Button
+from intro import wyswietlintro
+
 import random
 
 class Game:
@@ -20,9 +22,12 @@ class Game:
 		self.level = Level()
 
 		#Muzyka
-		main_sound = pygame.mixer.Sound('../audio/main.ogg')
-		main_sound.set_volume(MusicVolume)
-		main_sound.play(loops = -1)
+		self.main_sound = pygame.mixer.Sound('../audio/main.ogg')
+		self.main_sound.set_volume(MusicVolume)
+		
+  
+		#FILM
+  
 	def run(self):
 		#tworzenuie tła
 		self.MianBC_surf = pygame.image.load('../graphics/MainWallPaper.png').convert()
@@ -38,6 +43,11 @@ class Game:
 		Advice_surf = self.font_advice.render(str(Advice_menu[i]),False,'white')
 		Advice_rect = Advice_surf.get_rect(center=(WIDTH/2, HEIGTH/1.2))
   
+		#Powiadomienie Intro
+		AdviceIntro_surf = self.font_advice.render(str('Ładowanie zajumje troche czasu'),False,'black')
+		AdviceIntro_rect = Advice_surf.get_rect(center=(WIDTH / 1.9, HEIGTH/1.83))
+		#Przycisk Intro
+		Intro_surf = self.Button_Font.render(str('Intro'),False,'red')
 		#Przyciks Kontynułuj 
 		Continue_surf = self.Button_Font.render(str('kontynuuj'),False,'white')
 		#Przyciks Start
@@ -52,8 +62,8 @@ class Game:
 		ContinueButton =Button(WIDTH / 2.5, HEIGTH/3.5, Continue_surf, 0.8)
 		StartButton =Button(WIDTH / 2.5, HEIGTH/3.5, Start_surf, 0.8)
   
-		OptionsButton =Button(WIDTH / 2.5, HEIGTH/2.1, Opcje_surf, 0.8)
-
+		OptionsButton =Button(WIDTH / 2.5, HEIGTH/2.4, Opcje_surf, 0.8)
+		IntroButton =Button(WIDTH / 2.5, HEIGTH/1.8, Intro_surf, 0.8)
 		#Exit_img = pygame.image.load('../graphics/buttons/Koniec.png').convert_alpha()
 		ExitButton =Button(WIDTH / 2.6, HEIGTH/1.5, Konie_surf, 0.8)
   
@@ -84,6 +94,7 @@ class Game:
 				current_timeMenu = pygame.time.get_ticks()
 				if current_timeMenu - startinMenu_time >= displayInMenu_time:
 					self.canDisMenu = True
+					
 				else:
 					self.canDisMenu = False
 		
@@ -96,6 +107,7 @@ class Game:
 			if self.Studios == True:
 				if current_time - start_time >= display_time:
 					self.Studios = False
+					self.main_sound.play(loops = -1)
 				self.screen.blit(self.Studio_surf,self.Studio_rect)
 			else:
 				#Wyświetlanie tła
@@ -106,10 +118,14 @@ class Game:
 					self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
 					#Wyświetlenie Porady
 					self.screen.blit(Advice_surf,Advice_rect )
+					self.screen.blit(AdviceIntro_surf,AdviceIntro_rect )
 					if StartButton.draw(self.screen):
 						isStart = True
 					if OptionsButton.draw(self.screen):
 						pass
+					if IntroButton.draw(self.screen):
+						self.main_sound.stop()
+						wyswietlintro()
 					if ExitButton.draw(self.screen):
 						pygame.quit()
 						sys.exit()
