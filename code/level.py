@@ -54,6 +54,7 @@ class Level:
   
 		for style,layout in layouts.items():
 			for row_index,row in enumerate(layout):
+				print('index' ,row_index,' columna ' ,row)
 				for col_index, col in enumerate(row):
 					
 					if col != '-1':
@@ -75,14 +76,6 @@ class Level:
 
 							# co = graphics['objects'][27]
 							# print(x)
-							
-
-
-							# exit(0)
-
-							print(col)
-							#print(graphics['objects'][int(col)],"daedjoi")
-							surf = graphics['objects'][int(col)] 
 						
 							print(col)
 							surf = graphics['objects'][int(col)]
