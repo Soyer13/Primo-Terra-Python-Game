@@ -77,7 +77,7 @@ class UI:
 			pygame.draw.rect(self.display_surface,UI_BORDER_COLOR,text_rect.inflate(20,20),2)
 			return isE
 	def show_message_bubble(self,message,name = 'Prob'):
-		print(message)
+		
 		text_surf = self.massagefont.render(str(name + ': ' +message),False,TEXT_COLOR)
 		x = 20
 		y = self.display_surface.get_size()[1] - 20

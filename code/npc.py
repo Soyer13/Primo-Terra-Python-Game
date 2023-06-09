@@ -77,7 +77,7 @@ class NPC(Entety):
             if isE == True:
                 
                 self.ui.show_message_bubble(Advice_menu[self.i],self.npc_name)
-                print('wyswietla') 
+                
 
                      
         else:
@@ -102,6 +102,10 @@ class NPC(Entety):
             self.frame_index = 0
             
         self.image = animation[int(self.frame_index)]
+        scale = 3.5
+        width = self.image.get_width()
+        height = self.image.get_height()
+        self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect(center = self.hitbox.center)
         
         '''if not self.vulnerable:
