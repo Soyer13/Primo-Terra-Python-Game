@@ -18,7 +18,11 @@ class Game:
 		self.isPause = False
 		self.canDisMenu = True
 		self.level = Level()
-	
+
+		#Muzyka
+		main_sound = pygame.mixer.Sound('../audio/main.ogg')
+		main_sound.set_volume(MusicVolume)
+		main_sound.play(loops = -1)
 	def run(self):
 		#tworzenuie tła
 		self.MianBC_surf = pygame.image.load('../graphics/MainWallPaper.png').convert()
