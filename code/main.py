@@ -3,7 +3,7 @@ from settings import *
 from level import Level
 from button import Button
 from intro import wyswietlintro
-from slider import Slider
+from slider import slider_function
 import random
 
 class Game:
@@ -28,7 +28,7 @@ class Game:
 		self.main_sound = pygame.mixer.Sound('../audio/main.ogg')
 		self.main_sound.set_volume(self.MusicVolume)
 		
-		self.slider = Slider(WIDTH/2)
+		#self.slider = Slider(WIDTH/2)
 		#FILM
   
 	def run(self):
@@ -135,7 +135,8 @@ class Game:
 							sys.exit()
 					else:
 						
-						self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
+						#self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
+						self.MusicVolume = slider_function(self.screen,event,MusicVolume,WIDTH/2,HEIGTH/2,300,0,2)
 						self.main_sound.set_volume(self.MusicVolume)
 				
 				if isStart == True:				

@@ -1,50 +1,33 @@
-import pygame
 from button import Button
 from settings import *
-class Slider():
-    def __init__(self,posx):
-        self.black = (0, 0, 0)
-        self.white = (255, 255, 255)
-        self.Button_Font = pygame.font.Font(UI_FONT,80)
-        self.slider_position = posx
-        self.is_dragging = False
-        
-    
-    def draw_slider(self,window,posytion,positionX,positionY,length ):
-        pygame.draw.line(window, 'green', (positionX, positionY), (positionX + length, positionY), 5)
-        pygame.draw.circle(window, self.white, (50 + posytion, positionY), 15)
-
-    def map_value(self,slider_pos, posx, length, StartValue, MaxValue):
-        return StartValue + (MaxValue - StartValue) * ((slider_pos - posx) / (length - posx))
+import pygame
 
 
-    def slider(self,window,event,slider_position,posx,posy,length):
-        self.slider_position = float(posx) + float(slider_position)
-        slider_positionX = posx
-        slider_positionY = posy
-        
-        
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if pygame.mouse.get_pressed()[0]:
-                self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
-                if posx <= self.mouse_x <= posx + length and posy - 20 <= self.mouse_y <= posy + 20:
-                    self.is_dragging = True
-            elif event.type == pygame.MOUSEBUTTONUP:
-                self.is_dragging = False
-            elif event.type == pygame.MOUSEMOTION:
-                if self.is_dragging:
-                    self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
-                    if posx <= self.mouse_x <= posx + length:
-                        self.slider_position = self.mouse_x - posx
-        ''' if IntroButton.draw(window):
-        running =  False'''
-        value = self.map_value(self.slider_position, slider_positionX, length, 0, 2)
-        window.fill(self.black)
-        self.draw_slider(window ,self.slider_position,slider_positionX,slider_positionY,length )
-        pygame.display.update()
+def slider_function(window, event, slider_position, x, y, length, min_value, max_value):
+    black = (0, 0, 0)
+    white = (255, 255, 255)
+    is_dragging = False
 
-        print("Obecna wartość suwaka:", value)
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if pygame.mouse.get_pressed()[0]:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if x <= mouse_x <= x + length and y - 20 <= mouse_y <= y + 20:
+                is_dragging = True
+    elif event.type == pygame.MOUSEBUTTONUP:
+        is_dragging = False
+    elif event.type == pygame.MOUSEMOTION:
+        if is_dragging:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if x <= mouse_x <= x + length:
+                slider_position = mouse_x - x
 
-        return value
+    value = min_value + (max_value - min_value) * (slider_position / length)
+    window.fill(black)
+    pygame.draw.line(window, white, (x, y), (x + length, y), 5)
+    pygame.draw.circle(window, white, (x + slider_position, y), 15)
+    pygame.display.update()
+
+    return value
+
 
 
