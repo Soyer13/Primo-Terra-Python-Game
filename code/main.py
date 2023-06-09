@@ -38,7 +38,7 @@ class Game:
 		Continue_surf = self.Button_Font.render(str('kontynuuj'),False,'white')
 		#Przyciks Start
 		Start_surf = self.Button_Font.render(str('Start'),False,'white')
-		#Przyciks Opcje
+		#Przyciks Opcjef
 		Opcje_surf = self.Button_Font.render(str('Opcje'),False,'#6719b5')
 		#Przyciks Koniec
 		Konie_surf = self.Button_Font.render(str('Koniec'),False,'#75a832')
@@ -117,6 +117,7 @@ class Game:
 					if self.isPause == False:
 						
          				# uruchowniemie gry
+						self.screen.fill(WATER_COLOR) 
 						self.level.run()
 					else:
 						self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )

@@ -34,6 +34,9 @@ class NPC(Entety):
 
         self.pos = pos
         self.player = player
+        
+        '''self.RobotSound = pygame.mixer.Sound('../audio/Robot.wav')
+        self.RobotSound.set_volume(SoundEffectVolume)'''
         ''' # player interaction
         self.can_attack = True
         self.attack_time = None
@@ -72,10 +75,10 @@ class NPC(Entety):
         if distance <= 50:
             self.status = 'idle'
         elif distance <= self.notice_radius:
-            #self.status = 'move'       
-            isE = self.ui.show_interactions()
+            #self.status = 'move' 
+            isE = self.ui.show_interactions()  
             if isE == True:
-                
+                #self.RobotSound.play()
                 self.ui.show_message_bubble(Advice_menu[self.i],self.npc_name)
                 
 

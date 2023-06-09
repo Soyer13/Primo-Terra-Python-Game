@@ -44,6 +44,16 @@ class Enemy(Entety):
         self.vulnerable = True
         self.hit_time = None
         self.invincibility_duration = 300
+        
+        #dźwieki
+        self.healsounds = pygame.mixer.Sound('../audio/heal.wav')
+        self.healsounds.set_volume(SoundEffectVolume)
+        self.death_sound = pygame.mixer.Sound('../audio/death.wav')
+        self.hit_sound = pygame.mixer.Sound('../audio/hit.wav')
+        self.attack_sound = pygame.mixer.Sound(monster_info['attack_sound'])
+        self.death_sound.set_volume(SoundEffectVolume)
+        self.hit_sound.set_volume(SoundEffectVolume)
+        self.attack_sound.set_volume(SoundEffectVolume)
     
     def import_graphics(self,name):
         self.animations = {'idle':[],'move':[],'attack':[]}
@@ -84,6 +94,7 @@ class Enemy(Entety):
         if self.status == 'attack':
             self.attack_time = pygame.time.get_ticks()
             self.damage_player(self.attack_damage,self.attack_type)
+            self.attack_sound.play()
         elif self.status == 'move':
             self.direction = self.get_player_distance_direction(player)[1]
         else:
@@ -119,6 +130,7 @@ class Enemy(Entety):
 
     def get_damage(self,player,attack_type):
         if self.vulnerable:
+            self.hit_sound.play()
             self.direction = self.get_player_distance_direction(player)[1]
             if attack_type == 'weapon':
                 self.health -= player.get_full_weapon_damage()
@@ -131,11 +143,14 @@ class Enemy(Entety):
     def check_death(self,player):
         if self.health <= 0:
             self.kill()
+            self.death_sound.play()
             if player.health < 100:
                 if player.health + self.health_recovered < 100:
                     player.health += self.health_recovered
+                    self.healsounds.play()
                 else:
                     player.health = 100
+                    self.healsounds.play()
                         
 
     def hit_reaction(self):

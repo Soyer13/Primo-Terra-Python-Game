@@ -10,7 +10,7 @@ class Player(pygame.sprite.Sprite):
 		super().__init__(groups)
 		self.image = pygame.image.load('../graphics/test/player.png').convert_alpha()
 		self.rect = self.image.get_rect(topleft = pos)
-		self.hitbox  = self.rect.inflate(0,-26)
+		self.hitbox  = self.rect.inflate(-6,HITBOX_OFFSET['player'])
 
 		#graphic setup
 		self.import_player_assets()
@@ -46,6 +46,10 @@ class Player(pygame.sprite.Sprite):
 		self.vulnerable = True
 		self.hurt_time = None
 		self.invulnerability_duration = 500
+  
+		#dźwiek broni 
+		self.weapon_attack_sound = pygame.mixer.Sound('../audio/sword.wav')
+		self.weapon_attack_sound.set_volume(SoundEffectVolume)
 
 		self.ui = UI()
 	def import_player_assets(self):
@@ -87,6 +91,7 @@ class Player(pygame.sprite.Sprite):
 				self.attacking = True
 				self.attack_time = pygame.time.get_ticks()
 				self.create_attack()
+				self.weapon_attack_sound.play()
 
 			#
 
@@ -204,6 +209,7 @@ class Player(pygame.sprite.Sprite):
 		if self.health <= 0:
 			self.kill()
 			self.isDead = True
+			
 			
 			
   
