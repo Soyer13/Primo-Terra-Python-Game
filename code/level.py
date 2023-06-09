@@ -33,7 +33,7 @@ class Level:
 		# user interface 
 		self.ui = UI()
 
-		self.isPause = False
+		
 	def create_map(self):
 		
 		layouts = {
@@ -121,11 +121,7 @@ class Level:
 			# spawn particles
 
 	def run(self):
-		keys = pygame.key.get_pressed()
 		
-		if keys[pygame.K_ESCAPE]:
-			self.isPause = not self.isPause
-		if self.isPause == False:
 			# update and draw the game
 			self.visible_sprites.custom_draw(self.player)
 			self.visible_sprites.update()

@@ -15,7 +15,8 @@ class Game:
 		self.font = pygame.font.Font(UI_FONT,UI_FONT_SIZE)
 		self.font_advice = pygame.font.Font(UI_FONT,16)
 		self.Button_Font = pygame.font.Font(UI_FONT,80)
-
+		self.isPause = False
+		self.canDisMenu = True
 		self.level = Level()
 	
 	def run(self):
@@ -33,6 +34,8 @@ class Game:
 		Advice_surf = self.font_advice.render(str(Advice_menu[i]),False,'white')
 		Advice_rect = Advice_surf.get_rect(center=(WIDTH/2, HEIGTH/1.2))
   
+		#Przyciks Kontynułuj 
+		Continue_surf = self.Button_Font.render(str('kontynuuj'),False,'white')
 		#Przyciks Start
 		Start_surf = self.Button_Font.render(str('Start'),False,'white')
 		#Przyciks Opcje
@@ -42,6 +45,7 @@ class Game:
   
 		#przyciski
 		#Start_img = pygame.image.load('../graphics/buttons/Start.png').convert_alpha()
+		ContinueButton =Button(WIDTH / 2.5, HEIGTH/3.5, Continue_surf, 0.8)
 		StartButton =Button(WIDTH / 2.5, HEIGTH/3.5, Start_surf, 0.8)
   
 		OptionsButton =Button(WIDTH / 2.5, HEIGTH/2.1, Opcje_surf, 0.8)
@@ -63,7 +67,25 @@ class Game:
 				if event.type == pygame.QUIT:
 					pygame.quit() 
 					sys.exit()
-
+     
+			keys = pygame.key.get_pressed()
+			
+			if self.canDisMenu == True:
+				if keys[pygame.K_ESCAPE]:
+						self.isPause = not self.isPause
+						displayInMenu_time = 300
+						startinMenu_time = pygame.time.get_ticks()
+						self.canDisMenu = False
+			else:
+				current_timeMenu = pygame.time.get_ticks()
+				if current_timeMenu - startinMenu_time >= displayInMenu_time:
+					self.canDisMenu = True
+				else:
+					self.canDisMenu = False
+		
+				
+					
+     
 			self.screen.fill('black') 
 			#Wyświetlenie Studio
 			current_time = pygame.time.get_ticks()
@@ -88,10 +110,23 @@ class Game:
 						pygame.quit()
 						sys.exit()
      
-				# uruchowniemie gry
-				if isStart == True:
-					self.level.run()
-
+				
+				if isStart == True:				
+					#Menu W Grze
+					
+					if self.isPause == False:
+						
+         				# uruchowniemie gry
+						self.level.run()
+					else:
+						self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
+						if ContinueButton.draw(self.screen):
+							self.isPause = False
+						if OptionsButton.draw(self.screen):
+							pass
+						if ExitButton.draw(self.screen):
+							pygame.quit()
+							sys.exit()
 			#przyciks Restat Po śmierci
 			if self.level.player.isDead == True:
 				Restart_img = pygame.image.load('../graphics/buttons/Restart.png').convert_alpha()
