@@ -63,7 +63,7 @@ class UI:
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_e]:
 				isE =True
-				print('interakcja')
+				
 			else:
 				isE = False
     

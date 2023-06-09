@@ -33,7 +33,9 @@ class Level:
 		# user interface 
 		self.ui = UI()
 
+		self.isPause = False
 	def create_map(self):
+		
 		layouts = {
 			'boundary': import_csv_layout('../map/map_FloorBlocks.csv'),
 			'grass': import_csv_layout('../map/map_Grass.csv'),
@@ -119,14 +121,19 @@ class Level:
 			# spawn particles
 
 	def run(self):
-		# update and draw the game
-		self.visible_sprites.custom_draw(self.player)
-		self.visible_sprites.update()
-		self.visible_sprites.enemy_update(self.player)
-		self.player_attack_logic()
-		self.ui.display(self.player)
-		self.ui.displayDead(self.player.isDead)
-		debug(self.player.health,10,0)
+		keys = pygame.key.get_pressed()
+		
+		if keys[pygame.K_ESCAPE]:
+			self.isPause = not self.isPause
+		if self.isPause == False:
+			# update and draw the game
+			self.visible_sprites.custom_draw(self.player)
+			self.visible_sprites.update()
+			self.visible_sprites.enemy_update(self.player)
+			self.player_attack_logic()
+			self.ui.display(self.player)
+			self.ui.displayDead(self.player.isDead)
+			debug(self.player.health,10,0)
 
 class YSortCamerGroup(pygame.sprite.Group):
 	def __init__(self):
