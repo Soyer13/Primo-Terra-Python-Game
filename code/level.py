@@ -44,7 +44,12 @@ class Level:
 			'grass': import_folder('../graphics/Grass'),
 			'objects': import_folder('../graphics/objects')
 		}
-
+		self.player = Player((1,1),
+		[self.visible_sprites],
+		self.obstacle_sprites,
+		self.create_attack,
+		self.destroy_attack)
+  
 		for style,layout in layouts.items():
 			for row_index,row in enumerate(layout):
 				for col_index, col in enumerate(row):
@@ -67,23 +72,25 @@ class Level:
 
 						if style == 'entities':
 							if col == '394':
+								self.player.kill()
 								self.player = Player((x,y),
 									[self.visible_sprites],
 									self.obstacle_sprites,
 									self.create_attack,
 									self.destroy_attack)
 							else:
-								if col == '390': monster_name = 'bamboo'
-								elif col == '391': monster_name = 'spirit'
-								elif col == '392': monster_name = 'raccoon'
-								else: monster_name = 'squid'
-								Enemy(
-									monster_name,
-									(x,y),
-									[self.visible_sprites,self.attackable_sprites],
-									self.obstacle_sprites,
-									self.damage_player)
-		NPC('ROBOT',(2000,1200),[self.visible_sprites,self.obstacle_sprites],self.obstacle_sprites,self.player)
+								if col == '390' or col == '391' or col == '392':
+									if col == '390': monster_name = 'trashbagEnemy'
+									elif col == '391': monster_name = 'spirit'
+									elif col == '392': monster_name = 'trashcanEnemy'
+									Enemy(
+										monster_name,
+										(x,y),
+										[self.visible_sprites,self.attackable_sprites],
+										self.obstacle_sprites,
+										self.damage_player)
+								else:
+									NPC('ROBOT',(x,y),[self.visible_sprites,self.obstacle_sprites],self.obstacle_sprites,self.player)
         
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites,self.attack_sprites])
