@@ -55,12 +55,15 @@ class Level:
 		for style,layout in layouts.items():
 			for row_index,row in enumerate(layout):
 				for col_index, col in enumerate(row):
+					
 					if col != '-1':
 						x = col_index * TILESIZE
 						y = row_index * TILESIZE
 						if style == 'boundary':
+							print(col,"-b")
 							Tile((x,y),[self.obstacle_sprites],'invisible')
 						if style == 'grass':
+							print(col,"-g")
 							random_grass_image = choice(graphics['grass'])
 							Tile(
 								(x,y),
@@ -69,8 +72,21 @@ class Level:
 								random_grass_image)
 
 						if style == 'object':
+
+							# co = graphics['objects'][27]
+							# print(x)
+							
+
+
+							# exit(0)
+
+							print(col)
+							#print(graphics['objects'][int(col)],"daedjoi")
+							surf = graphics['objects'][int(col)] 
+						
 							print(col)
 							surf = graphics['objects'][int(col)]
+
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 
 						if style == 'entities':
