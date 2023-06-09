@@ -3,7 +3,7 @@ from settings import *
 from level import Level
 from button import Button
 from intro import wyswietlintro
-
+from slider import Slider
 import random
 
 class Game:
@@ -19,13 +19,16 @@ class Game:
 		self.Button_Font = pygame.font.Font(UI_FONT,80)
 		self.isPause = False
 		self.canDisMenu = True
+		self.isOptions = False
 		self.level = Level()
-
-		#Muzyka
-		self.main_sound = pygame.mixer.Sound('../audio/main.ogg')
-		self.main_sound.set_volume(MusicVolume)
-		
   
+		
+		#Muzyka
+		self.MusicVolume = MusicVolume
+		self.main_sound = pygame.mixer.Sound('../audio/main.ogg')
+		self.main_sound.set_volume(self.MusicVolume)
+		
+		self.slider = Slider(WIDTH/2)
 		#FILM
   
 	def run(self):
@@ -114,40 +117,45 @@ class Game:
 				self.screen.blit(self.MianBC_surf,self.MainBC_rect)
 				#Menu Główne
 				if isStart == False:
-					#Wyświetlanie Tytułu
-					self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
-					#Wyświetlenie Porady
-					self.screen.blit(Advice_surf,Advice_rect )
-					self.screen.blit(AdviceIntro_surf,AdviceIntro_rect )
-					if StartButton.draw(self.screen):
-						isStart = True
-					if OptionsButton.draw(self.screen):
-						pass
-					if IntroButton.draw(self.screen):
-						self.main_sound.stop()
-						wyswietlintro()
-					if ExitButton.draw(self.screen):
-						pygame.quit()
-						sys.exit()
-     
-				
-				if isStart == True:				
-					#Menu W Grze
-					
-					if self.isPause == False:
-						
-         				# uruchowniemie gry
-						self.screen.fill(WATER_COLOR) 
-						self.level.run()
-					else:
+					if self.isOptions == False:
+						#Wyświetlanie Tytułu
 						self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
-						if ContinueButton.draw(self.screen):
-							self.isPause = False
+						#Wyświetlenie Porady
+						self.screen.blit(Advice_surf,Advice_rect )
+						self.screen.blit(AdviceIntro_surf,AdviceIntro_rect )
+						if StartButton.draw(self.screen):
+							isStart = True
 						if OptionsButton.draw(self.screen):
-							pass
+							self.isOptions = True
+						if IntroButton.draw(self.screen):
+							self.main_sound.stop()
+							wyswietlintro()
 						if ExitButton.draw(self.screen):
 							pygame.quit()
 							sys.exit()
+					else:
+						
+						self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
+						self.main_sound.set_volume(self.MusicVolume)
+				
+				if isStart == True:				
+					#Menu W Grze
+					if self.isOptions == False:
+						if self.isPause == False:							
+							# uruchowniemie gry
+							self.screen.fill(WATER_COLOR) 
+							self.level.run()
+						else:
+							self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
+							if ContinueButton.draw(self.screen):
+								self.isPause = False
+							if OptionsButton.draw(self.screen):
+								self.isOptions = True
+							if ExitButton.draw(self.screen):
+								pygame.quit()
+								sys.exit()
+					else:
+						pass
 			#przyciks Restat Po śmierci
 			if self.level.player.isDead == True:
 				Restart_img = pygame.image.load('../graphics/buttons/Restart.png').convert_alpha()
