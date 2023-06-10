@@ -41,10 +41,10 @@ class Level:
 			'grass': import_csv_layout('../map/map_Grass.csv'),
 			'object': import_csv_layout('../map/map_Objects.csv'),
    			'entities': import_csv_layout('../map/map_Entities.csv'),
-			'details': import_csv_layout('../map/map_Details.csv')
+			
 		}
 		graphics = {
-			'grass': import_folder('../graphics/Grass'),
+			'grass': import_folder('../graphics/grass'),
 			'objects': import_folder('../graphics/objects')
 		
 		}
@@ -64,6 +64,7 @@ class Level:
       
       
 		for style,layout in layouts.items():
+			print(style)
 			for row_index,row in enumerate(layout):
 				print('index' ,row_index,' columna ' ,row)
 				for col_index, col in enumerate(row):
@@ -75,13 +76,10 @@ class Level:
 							print(col,"-b")
 							Tile((x,y),[self.obstacle_sprites],'invisible')
 						if style == 'grass':
-							print(col,"-g")
+							print("GRASS")
 							random_grass_image = choice(graphics['grass'])
-							Tile(
-								(x,y),
-								[self.visible_sprites,self.obstacle_sprites,self.attackable_sprites],
-								'grass',
-								random_grass_image)
+							#print(random_grass_image, "odejidew")
+							Tile((x,y),[self.visible_sprites,self.obstacle_sprites,self.attackable_sprites],'grass',random_grass_image)
 
 						if style == 'object':
 
