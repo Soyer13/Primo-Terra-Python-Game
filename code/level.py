@@ -78,7 +78,12 @@ class Level:
 							# print(x)
 						
 							print(col)
-							surf = graphics['objects'][int(col)]
+							graphicsS = graphics['objects'][int(col)]
+							width = graphicsS.get_width()
+							height = graphicsS.get_height()
+							scale = 4
+							graphicsS = pygame.transform.scale(graphicsS, (int(width * scale), int(height * scale)))
+							surf = graphicsS
 
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 

@@ -5,6 +5,7 @@ from button import Button
 from intro import wyswietlintro
 from slider import slider_function
 import random
+import cv2
 
 class Game:
 	
@@ -21,7 +22,7 @@ class Game:
 		self.canDisMenu = True
 		self.isOptions = False
 		self.level = Level()
-  
+		self.isIntro = False
 		
 		#Muzyka
 		self.MusicVolume = MusicVolume
@@ -40,6 +41,10 @@ class Game:
 		 #Tytuł 
 		PrimoTerra_surf = self.font.render(str('Primo Terra'),False,'#6AF468')
 		PrimowTerra_rect = PrimoTerra_surf.get_rect(center=(WIDTH / 2, HEIGTH/6))
+  
+		#Ładowanie 
+		Loading_surf = self.font.render(str('Ładowanie...'),False,'#6AF468')
+		Loading_rect = PrimoTerra_surf.get_rect(center=(WIDTH / 3, HEIGTH/2))
 	
 		#Porady
 		i = random.randint(0, len(Advice_menu) -1)
@@ -115,32 +120,38 @@ class Game:
 			else:
 				#Wyświetlanie tła
 				self.screen.blit(self.MianBC_surf,self.MainBC_rect)
-				#Menu Główne
+				# Menu Główne {#173, 24} 
 				if isStart == False:
 					if self.isOptions == False:
-						#Wyświetlanie Tytułu
-						self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
-						#Wyświetlenie Porady
-						self.screen.blit(Advice_surf,Advice_rect )
-						self.screen.blit(AdviceIntro_surf,AdviceIntro_rect )
-						if StartButton.draw(self.screen):
-							isStart = True
-						if OptionsButton.draw(self.screen):
-							self.isOptions = True
-						if IntroButton.draw(self.screen):
-							self.main_sound.stop()
-							wyswietlintro()
-						if ExitButton.draw(self.screen):
-							pygame.quit()
-							sys.exit()
+						if self.isIntro ==False:
+							#Wyświetlanie Tytułu
+							self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
+							#Wyświetlenie Porady
+							self.screen.blit(Advice_surf,Advice_rect )
+							self.screen.blit(AdviceIntro_surf,AdviceIntro_rect )
+							if StartButton.draw(self.screen):
+								isStart = True
+							if OptionsButton.draw(self.screen):
+								self.isOptions = True
+							if ExitButton.draw(self.screen):
+								pygame.quit()
+								sys.exit()
+							if IntroButton.draw(self.screen):
+								self.isIntro = True	
+								self.main_sound.stop()
+								self.screen.fill('black')
+								self.screen.blit(Loading_surf,Loading_rect )
+						else:
+							self.isIntro = wyswietlintro(self.screen,self.clock)
+							self.main_sound.play(loops = -1)
 					else:
-						
+						# Opcje {#873, 4} 
 						#self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
 						self.MusicVolume = slider_function(self.screen,event,MusicVolume,WIDTH/2,HEIGTH/2,300,0,2)
 						self.main_sound.set_volume(self.MusicVolume)
 				
 				if isStart == True:				
-					#Menu W Grze
+					# Menu W Grze {#234,16 }
 					if self.isOptions == False:
 						if self.isPause == False:							
 							# uruchowniemie gry

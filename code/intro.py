@@ -1,54 +1,35 @@
 from settings import *
 import pygame
-from PIL import Image
-def wyswietlintro():
-    # Inicjalizacja biblioteki Pygame
-    pygame.init()
+import cv2
 
-    # Wczytanie animacji GIF jako listy klatek
-    gif_path = "../graphics/FilmWstep.gif"
-    gif = Image.open(gif_path)
-    frames = []
-    try:
-        while True:
-            frames.append(gif.copy())
-            gif.seek(len(frames))
-    except EOFError:
-        pass
+def wyswietlintro(screen,clock):
+    #
 
+  
     main_sound = pygame.mixer.Sound('../audio/Together-to-the-Stars.mp3')
     main_sound.set_volume(MusicVolume)
     main_sound.play()
-    # Utworzenie okna o rozmiarach pierwszej klatki GIF
-    width, height = frames[0].size
-    screen = pygame.display.set_mode((width, height))
+    video = cv2.VideoCapture("../Film/FilmWstep.mp4")
+    success, video_image = video.read()
+    fps = video.get(cv2.CAP_PROP_FPS)
 
-    # Konwersja klatek na format zrozumiały dla Pygame
-    pygame_frames = []
-    for frame in frames:
-        pygame_frame = pygame.image.fromstring(frame.tobytes(), frame.size, frame.mode)
-        pygame_frames.append(pygame_frame)
-
-    # Ustawienie indeksu bieżącej klatki
-    current_frame_index = 0
-
-    # Główna pętla programu
-    running = True
+    screen = pygame.display.set_mode(video_image.shape[1::-1])
     clock = pygame.time.Clock()
-    while running:
+
+    run = success
+    while run:
+        clock.tick(fps)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-
-        # Wyświetlanie bieżącej klatki na ekranie
-        screen.blit(pygame_frames[current_frame_index], (0, 0))
+                run = False
+        
+        success, video_image = video.read()
+        if success:
+            video_surf = pygame.image.frombuffer(
+                video_image.tobytes(), video_image.shape[1::-1], "BGR")
+        else:
+            run = False
+        screen.blit(video_surf, (0, 0))
         pygame.display.flip()
-
-        # Zwiększanie indeksu bieżącej klatki i cykliczne odtwarzanie animacji
-        current_frame_index = (current_frame_index + 1) % len(pygame_frames)
-
-        # Ustalenie liczby klatek na sekundę (FPS)
-        clock.tick(30)  # Możesz dostosować wartość FPS według własnych potrzeb
-
-    # Zakończenie programu
-    pygame.quit()
+    main_sound.stop()
+    return False
