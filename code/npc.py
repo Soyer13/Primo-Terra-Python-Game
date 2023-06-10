@@ -79,7 +79,7 @@ class NPC(Entety):
             isE = self.ui.show_interactions()  
             if isE == True:
                 self.RobotSound.play()
-                self.ui.show_message_bubble(Advice_menu[self.i],self.npc_name)
+                self.ui.show_message_bubble(NPCquotes[self.i],self.npc_name)
                 
 
                      

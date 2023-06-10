@@ -184,7 +184,7 @@ class Player(pygame.sprite.Sprite):
 
 		# ustawienie grafiki gtacza
 		self.image = animation[int(self.frame_index)]
-		scale = 3.5
+		scale = 3
 		width = self.image.get_width()
 		height = self.image.get_height()
 		self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
