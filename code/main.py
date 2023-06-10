@@ -8,6 +8,7 @@ import random
 import cv2
 from input import input_box
 from Radio import Radio
+from displeyEND import Napis
 
 class Game:
 	
@@ -31,9 +32,12 @@ class Game:
 		'''self.main_sound = pygame.mixer.Sound('../audio/main.ogg')
 		self.main_sound.set_volume(self.MusicVolume)'''
 		
+		self.isENDGAME = False
+  
 		self.radio = Radio('../audio/Music')
 		#self.slider = Slider(WIDTH/2)
 		#FILM
+		self.napis = Napis()
   
 	def run(self):
 		#tworzenuie tła
@@ -103,9 +107,17 @@ class Game:
 		self.ad = True
 		self.ad_surf = pygame.image.load('../graphics/Reklama ECO BOT.png').convert()
 		self.ad_surf = pygame.transform.scale(self.ad_surf, (WIDTH, HEIGTH))
-		self.ad_rect = self.Studio_surf.get_rect(topleft = (0,0))
+		self.ad_rect = self.ad_surf.get_rect(topleft = (0,0))
 		self.adisStart = False
   
+		self.is1 = True
+		self.is2 = True
+		self.is3 = True
+		self.is4 = True
+		self.is5 = True
+		self.is6 = True
+		self.is7 = True
+		self.is8 = True	
   
 		isStart = False
 		while True:
@@ -131,9 +143,6 @@ class Game:
 				else:
 					self.canDisMenu = False
 		
-				
-					
-     
 			self.screen.fill('black') 
 			#Wyświetlenie Studio
 			current_time = pygame.time.get_ticks()
@@ -145,78 +154,122 @@ class Game:
 			else:
 				#Wyświetlanie tła
 				self.screen.blit(self.MianBC_surf,self.MainBC_rect)
-				# Menu Główne {#173, 24} 
-				if isStart == False:
-					if self.isOptions == False:
-						if self.isIntro ==False:
-							#Wyświetlanie Tytułu
-							self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
-							#Wyświetlenie Porady
-							self.screen.blit(Advice_surf,Advice_rect )
-							self.screen.blit(AdviceIntro_surf,AdviceIntro_rect )
-							if StartButton.draw(self.screen):
-								isStart = True
-							if OptionsButton.draw(self.screen):
-								self.isOptions = True
-							if ExitButton.draw(self.screen):
-								pygame.quit()
-								sys.exit()
-							if IntroButton.draw(self.screen):
-								self.isIntro = True	
-								self.radio.radioStop()
-								self.screen.fill('black')
-								self.screen.blit(Loading_surf,Loading_rect )
-						else:
-							self.isIntro = wyswietlintro(self.screen,self.clock)
-							self.radio.radioPlay()
-					else:
-						# Opcje {#873, 7} 
-						#self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
-						if MenuButton.draw(self.screen):
-							self.isOptions = False
-						#self.MusicVolume = input_box(self.screen, self.font_advice, 100, 100, 200, 32)
-						
-						
-				if isStart == True:				
-					# Menu W Grze 25252525
-					if self.isOptions == False:
-						if self.isPause == False:
-							
-							
-							#earth {#699 ,10}
-							if self.earth == True:
-								if self.earthisStart == False:
-									startearth_time = pygame.time.get_ticks()
-									self.earthisStart = True
-								currentearth_time = pygame.time.get_ticks()
-								if currentearth_time - startearth_time >= displayearth_time:
-									self.earth = False	
-								self.screen.blit(self.earth_surf,self.earth_rect)
+				if self.isENDGAME == False:
+					# Menu Główne {#173, 24} 
+					if isStart == False:
+						if self.isOptions == False:
+							if self.isIntro ==False:
+								#Wyświetlanie Tytułu
+								self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
+								#Wyświetlenie Porady
+								self.screen.blit(Advice_surf,Advice_rect )
+								self.screen.blit(AdviceIntro_surf,AdviceIntro_rect )
+								if StartButton.draw(self.screen):
+									isStart = True
+								if OptionsButton.draw(self.screen):
+									self.isOptions = True
+								if ExitButton.draw(self.screen):
+									pygame.quit()
+									sys.exit()
+								if IntroButton.draw(self.screen):
+									self.isIntro = True	
+									self.radio.radioStop()
+									self.screen.fill('black')
+									self.screen.blit(Loading_surf,Loading_rect )
 							else:
-								if self.ad == True:
-									if self.adisStart == False:
-										startad_time = pygame.time.get_ticks()
-										self.adisStart = True
-									currentad_time = pygame.time.get_ticks()
-									if currentad_time - startad_time >= displayad_time:
-										self.ad = False	
-									self.screen.blit(self.ad_surf,self.ad_rect)
-								else:
-									# uruchowniemie gry {#922 ,2}
-									self.screen.fill(WATER_COLOR) 
-									self.level.run()
+								self.isIntro = wyswietlintro(self.screen,self.clock)
+								self.radio.radioPlay()
 						else:
-							self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
-							if ContinueButton.draw(self.screen):
-								self.isPause = False
-							if OptionsButton.draw(self.screen):
-								self.isOptions = True
-							if ExitButton.draw(self.screen):
-								pygame.quit()
-								sys.exit()
-					else:
-						if MenuButton.draw(self.screen):
-							self.isOptions = False
+							# Opcje {#873, 7} 
+							#self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
+							if MenuButton.draw(self.screen):
+								self.isOptions = False
+							#self.MusicVolume = input_box(self.screen, self.font_advice, 100, 100, 200, 32)
+							
+							
+					if isStart == True:				
+						# Menu W Grze 25252525
+						if self.isOptions == False:
+							if self.isPause == False:
+								
+								
+								#earth {#699 ,10}
+								if self.earth == True:
+									if self.earthisStart == False:
+										startearth_time = pygame.time.get_ticks()
+										self.earthisStart = True
+									currentearth_time = pygame.time.get_ticks()
+									if currentearth_time - startearth_time >= displayearth_time:
+										self.earth = False	
+									self.screen.blit(self.earth_surf,self.earth_rect)
+								else:
+									if self.ad == True:
+										if self.adisStart == False:
+											startad_time = pygame.time.get_ticks()
+											self.adisStart = True
+										currentad_time = pygame.time.get_ticks()
+										if currentad_time - startad_time >= displayad_time:
+											self.ad = False	
+										self.screen.blit(self.ad_surf,self.ad_rect)
+									else:
+										# uruchowniemie gry {#922 ,2}
+										self.screen.fill(WATER_COLOR) 
+										self.isENDGAME = self.level.run()
+							else:
+								self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
+								if ContinueButton.draw(self.screen):
+									self.isPause = False
+								if OptionsButton.draw(self.screen):
+									self.isOptions = True
+								if ExitButton.draw(self.screen):
+									pygame.quit()
+									sys.exit()
+						else:
+							if MenuButton.draw(self.screen):
+								self.isOptions = False
+
+				else:
+					if self.is1 == True:
+						
+						self.is1 =self.napis.napis(4000,'../graphics/Napisy/ZiemiaZanieczyszczona2.png',self.screen)
+					elif self.is1 == False:
+
+						if self.is2 == True:
+							
+							self.is2 =self.napis.napis(4000,'../graphics/Napisy/Napisy1.png',self.screen)
+						elif self.is2 == False:	
+	
+							if self.is3 == True:
+								
+								self.is3 =self.napis.napis(4000,'../graphics/Napisy/Napisy2.png',self.screen)
+							elif self.is3 == False:	
+		
+								if self.is4 == True:
+									
+									self.is4 =self.napis.napis(4000,'../graphics/Napisy/Napisy3.png',self.screen)
+								elif self.is4 == False:	
+			
+									if self.is5 == True:
+										
+										self.is5 =self.napis.napis(4000,'../graphics/Napisy/Napisy4.png',self.screen)
+									elif self.is5 == False:	
+				
+										if self.is6 == True:
+											
+											self.is6 =self.napis.napis(4000,'../graphics/Napisy/Napisy5.png',self.screen)
+										elif self.is6 == False:	
+					
+											if self.is7 == True:
+												
+												self.is7 =self.napis.napis(4000,'../graphics/Napisy/Napisy6.png',self.screen)
+											elif self.is7 == False:	
+						
+												if self.is8 == True:
+													
+													self.is8 =self.napis.napis(4000,'../graphics/Napisy/Napisy7.png',self.screen)
+												else:
+													pygame.quit()
+					
 			#przyciks Restat Po śmierci
 			if self.level.player.isDead == True:
 				Restart_img = pygame.image.load('../graphics/buttons/Restart.png').convert_alpha()

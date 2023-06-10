@@ -53,7 +53,7 @@ Advice_menu = ['Oszczędzaj energię!',
                'Edukuj innych na temat ekologii!',
                'Oszczędzaj wodę!',
                'Nie marnowaniuj jedzenia !',
-               'WIECEJ DRZEW WIECEJ KWIATÓW !!'
+               'WIECEJ DRZEW WIECEJ KWIATÓW !!',
                'Noś swój kubek do kawiarni.',
        			'Uszyj sobie worki na warzywa.',
           		'Wyhoduj kilka własnych warzyw na balkonie.',

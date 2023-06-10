@@ -11,7 +11,7 @@ from enemy import Enemy
 from npc import NPC
 from weapon import Weapon
 from ui import UI
-from debug import debug
+from transmitter import Transmitter
 class Level:
 	def __init__(self):
 
@@ -33,9 +33,10 @@ class Level:
 		# user interface 
 		self.ui = UI()
 
-		
+		#Lista nadajników
+		self.isAllActive = False
 	def create_map(self):
-		
+		self.ListTra = []
 		layouts = {
 			'boundary': import_csv_layout('../map/map_FloorBlocks.csv'),
 			'grass': import_csv_layout('../map/map_Grass.csv'),
@@ -64,21 +65,20 @@ class Level:
 							self.create_attack,
 							self.destroy_attack)
       
-      
+      #Generowanie Mapy
 		for style,layout in layouts.items():
-			print(style)
 			for row_index,row in enumerate(layout):
-				print('index' ,row_index,' columna ' ,row)
+				
 				for col_index, col in enumerate(row):
 					
 					if col != '-1':
 						x = col_index * TILESIZE
 						y = row_index * TILESIZE
 						if style == 'boundary':
-							print(col,"-b")
+							
 							Tile((x,y),[self.obstacle_sprites],'invisible')
 						if style == 'grass':
-							print("GRASS")
+							
 							random_grass_image = choice(graphics['grass'])
 							
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites,self.attackable_sprites],'grass',random_grass_image)
@@ -87,7 +87,7 @@ class Level:
 
 							
 						
-							print(col)
+							
 							graphicsS = graphics['objects'][int(col)]
 							width = graphicsS.get_width()
 							height = graphicsS.get_height()
@@ -103,8 +103,7 @@ class Level:
 							height = gra.get_height()
 							scale = 2
 							gra = pygame.transform.scale(gra, (int(width * scale), int(height * scale)))
-							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'nadajnik',gra)
-
+							self.ListTra.append(Transmitter(self.player,(x,y),[self.visible_sprites,self.obstacle_sprites],'nadajnik',gra))   
 						if style == 'entities':
 							if col == '394':
 								pass
@@ -122,6 +121,18 @@ class Level:
 								else:
 									NPC('ROBOT',(x,y),[self.visible_sprites,self.obstacle_sprites],self.obstacle_sprites,self.player)
         
+	def isComplete(self):
+		self.isAllActive
+		for elements in self.ListTra:
+			debug('aktywuj 3 nadajniki aby wezwać oczyszczalnie śmieci z orbity',20,WIDTH/2)
+			if elements.isActive == True:
+				self.isAllActive = True
+	
+			else:
+				self.isAllActive = False
+				break
+		
+
 	def create_attack(self):
 		self.current_attack = Weapon(self.player,[self.visible_sprites,self.attack_sprites])
   
@@ -148,16 +159,18 @@ class Level:
 			self.player.hurt_time = pygame.time.get_ticks()
 			# spawn particles
 
-	def run(self):
-		
-			# update and draw the game
-			self.visible_sprites.custom_draw(self.player)
-			self.visible_sprites.update()
-			self.visible_sprites.enemy_update(self.player)
-			self.player_attack_logic()
-			self.ui.display(self.player)
-			self.ui.displayDead(self.player.isDead)
-			debug(self.player.health,10,0)
+	def run(self):		
+		# update and draw the game
+		self.visible_sprites.custom_draw(self.player)
+		self.visible_sprites.update()
+		self.visible_sprites.enemy_update(self.player)
+		self.player_attack_logic()
+		self.ui.display(self.player)
+		self.ui.displayDead(self.player.isDead)
+		debug(self.player.health,10,0)
+		self.isComplete()
+		return self.isAllActive
+
 
 class YSortCamerGroup(pygame.sprite.Group):
 	def __init__(self):
