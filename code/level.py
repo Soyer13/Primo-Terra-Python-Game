@@ -54,7 +54,7 @@ class Level:
 					x = col_index * TILESIZE
 					y = row_index * TILESIZE				
 					if col == '394':
-						self.player = Player((x + 100,y - 200),
+						self.player = Player((x ,y),
 							[self.visible_sprites],
 							self.obstacle_sprites,
 							self.create_attack,
