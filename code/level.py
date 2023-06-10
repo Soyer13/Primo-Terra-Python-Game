@@ -46,12 +46,21 @@ class Level:
 			'grass': import_folder('../graphics/Grass'),
 			'objects': import_folder('../graphics/objects')
 		}
-		self.player = Player((1,1),
-		[self.visible_sprites],
-		self.obstacle_sprites,
-		self.create_attack,
-		self.destroy_attack)
-  
+
+		#Stawianie Gracza
+		for row_index,row in enumerate(layouts['entities']):
+			for col_index, col in enumerate(row):
+				if col != '-1':
+					x = col_index * TILESIZE
+					y = row_index * TILESIZE				
+					if col == '394':
+						self.player = Player((x + 100,y - 200),
+							[self.visible_sprites],
+							self.obstacle_sprites,
+							self.create_attack,
+							self.destroy_attack)
+      
+      
 		for style,layout in layouts.items():
 			for row_index,row in enumerate(layout):
 				print('index' ,row_index,' columna ' ,row)
@@ -89,12 +98,7 @@ class Level:
 
 						if style == 'entities':
 							if col == '394':
-								self.player.kill()
-								self.player = Player((x,y),
-									[self.visible_sprites],
-									self.obstacle_sprites,
-									self.create_attack,
-									self.destroy_attack)
+								pass
 							else:
 								if col == '390' or col == '391' or col == '392':
 									if col == '390': monster_name = 'trashbagEnemy'
