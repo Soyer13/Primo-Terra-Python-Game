@@ -48,8 +48,8 @@ class Player(pygame.sprite.Sprite):
 		self.invulnerability_duration = 500
   
 		#dźwiek broni 
-		self.weapon_attack_sound = pygame.mixer.Sound('../audio/sword.wav')
-		self.weapon_attack_sound.set_volume(SoundEffectVolume)
+		self.weapon_attack_sound = pygame.mixer.Sound('../audio/Electric-Sound-Effect.mp3')
+		self.weapon_attack_sound.set_volume(SoundEffectVolume /2)
 
 		self.ui = UI()
 	def import_player_assets(self):

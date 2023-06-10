@@ -35,8 +35,8 @@ class NPC(Entety):
         self.pos = pos
         self.player = player
         
-        '''self.RobotSound = pygame.mixer.Sound('../audio/Robot.wav')
-        self.RobotSound.set_volume(SoundEffectVolume)'''
+        self.RobotSound = pygame.mixer.Sound('../audio/Robot.mp3')
+        self.RobotSound.set_volume(SoundEffectVolume)
         ''' # player interaction
         self.can_attack = True
         self.attack_time = None
@@ -78,7 +78,7 @@ class NPC(Entety):
             #self.status = 'move' 
             isE = self.ui.show_interactions()  
             if isE == True:
-                #self.RobotSound.play()
+                self.RobotSound.play()
                 self.ui.show_message_bubble(Advice_menu[self.i],self.npc_name)
                 
 

@@ -7,6 +7,8 @@ from slider import slider_function
 import random
 import cv2
 from input import input_box
+from Radio import Radio
+
 class Game:
 	
 	def __init__(self):		 
@@ -26,9 +28,10 @@ class Game:
 		
 		#Muzyka
 		self.MusicVolume = MusicVolume
-		self.main_sound = pygame.mixer.Sound('../audio/main.ogg')
-		self.main_sound.set_volume(self.MusicVolume)
+		'''self.main_sound = pygame.mixer.Sound('../audio/main.ogg')
+		self.main_sound.set_volume(self.MusicVolume)'''
 		
+		self.radio = Radio('../audio/Music')
 		#self.slider = Slider(WIDTH/2)
 		#FILM
   
@@ -101,7 +104,8 @@ class Game:
 				if event.type == pygame.QUIT:
 					pygame.quit() 
 					sys.exit()
-     
+
+			self.radio.play_music_from_folder(self.MusicVolume)
 			keys = pygame.key.get_pressed()
 			
 			if self.canDisMenu == True:
@@ -127,7 +131,7 @@ class Game:
 			if self.Studios == True:
 				if current_time - start_time >= display_time:
 					self.Studios = False
-					self.main_sound.play(loops = -1)
+					
 				self.screen.blit(self.Studio_surf,self.Studio_rect)
 			else:
 				#Wyświetlanie tła
@@ -150,19 +154,19 @@ class Game:
 								sys.exit()
 							if IntroButton.draw(self.screen):
 								self.isIntro = True	
-								self.main_sound.stop()
+								self.radio.radioStop()
 								self.screen.fill('black')
 								self.screen.blit(Loading_surf,Loading_rect )
 						else:
 							self.isIntro = wyswietlintro(self.screen,self.clock)
-							self.main_sound.play(loops = -1)
+							self.radio.radioPlay()
 					else:
 						# Opcje {#873, 7} 
 						#self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
 						if MenuButton.draw(self.screen):
 							self.isOptions = False
 						#self.MusicVolume = input_box(self.screen, self.font_advice, 100, 100, 200, 32)
-						self.main_sound.set_volume(self.MusicVolume)
+						
 						
 				if isStart == True:				
 					# Menu W Grze 25252525

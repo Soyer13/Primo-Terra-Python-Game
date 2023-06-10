@@ -46,9 +46,9 @@ class Enemy(Entety):
         self.invincibility_duration = 300
         
         #dźwieki
-        self.healsounds = pygame.mixer.Sound('../audio/heal.wav')
-        self.healsounds.set_volume(SoundEffectVolume)
-        self.death_sound = pygame.mixer.Sound('../audio/death.wav')
+        self.healsounds = pygame.mixer.Sound('../audio/heal.mp3')
+        self.healsounds.set_volume(SoundEffectVolume * 4)
+        self.death_sound = pygame.mixer.Sound('../audio/Trash-_Sound-Effect_.mp3')
         self.hit_sound = pygame.mixer.Sound('../audio/hit.wav')
         self.attack_sound = pygame.mixer.Sound(monster_info['attack_sound'])
         self.death_sound.set_volume(SoundEffectVolume)
