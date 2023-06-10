@@ -5,6 +5,7 @@ from button import Button
 from intro import wyswietlintro
 from slider import slider_function
 import random
+import cv2
 
 class Game:
 	
@@ -119,7 +120,7 @@ class Game:
 			else:
 				#Wyświetlanie tła
 				self.screen.blit(self.MianBC_surf,self.MainBC_rect)
-				# Menu Główne {#173, 23} 
+				# Menu Główne {#173, 24} 
 				if isStart == False:
 					if self.isOptions == False:
 						if self.isIntro ==False:
@@ -141,7 +142,8 @@ class Game:
 								self.screen.fill('black')
 								self.screen.blit(Loading_surf,Loading_rect )
 						else:
-							wyswietlintro(self.screen)
+							self.isIntro = wyswietlintro(self.screen,self.clock)
+							self.main_sound.play(loops = -1)
 					else:
 						# Opcje {#873, 4} 
 						#self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)

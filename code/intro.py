@@ -1,58 +1,35 @@
 from settings import *
 import pygame
-from PIL import Image
-def wyswietlintro(screen):
-    # Inicjalizacja biblioteki Pygame
-    pygame.init()
+import cv2
 
-    # Wczytanie animacji GIF jako listy klatek
-    gif_path = "../graphics/FilmWstep.gif"
-    gif = Image.open(gif_path)
-    frames = []
-    try:
-        while True:
-            frames.append(gif.copy())
-            gif.seek(len(frames))
-    except EOFError:
-        pass
-    
+def wyswietlintro(screen,clock):
+    #
+
   
     main_sound = pygame.mixer.Sound('../audio/Together-to-the-Stars.mp3')
     main_sound.set_volume(MusicVolume)
     main_sound.play()
-    
-   
-    
-    # Konwersja klatek na format zrozumiały dla Pygame
-    pygame_frames = []
-    for frame in frames:
-        pygame_frame = pygame.image.fromstring(frame.tobytes(), frame.size, frame.mode)
-        pygame_frames.append(pygame_frame)
+    video = cv2.VideoCapture("../Film/FilmWstep.mp4")
+    success, video_image = video.read()
+    fps = video.get(cv2.CAP_PROP_FPS)
 
-    # Ustawienie indeksu bieżącej klatki
-    current_frame_index = 0
-
-    # Główna pętla programu
-    running = True
+    screen = pygame.display.set_mode(video_image.shape[1::-1])
     clock = pygame.time.Clock()
-    while running:
-        try:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
 
-            # Wyświetlanie bieżącej klatki na ekranie
-            screen.blit(pygame_frames[current_frame_index], (0, 0))
-            pygame.display.flip()
-
-            # Zwiększanie indeksu bieżącej klatki i cykliczne odtwarzanie animacji
-            current_frame_index = (current_frame_index + 1) % len(pygame_frames)
-            clock.tick(30)  # Możesz dostosować wartość FPS według własnych potrzeb
-        except IndexError:
-            running = False
-            main_sound.stop()
-            # Ustalenie liczby klatek na sekundę (FPS)
-            
-
-    # Zakończenie programu
-    pygame.quit()
+    run = success
+    while run:
+        clock.tick(fps)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        
+        success, video_image = video.read()
+        if success:
+            video_surf = pygame.image.frombuffer(
+                video_image.tobytes(), video_image.shape[1::-1], "BGR")
+        else:
+            run = False
+        screen.blit(video_surf, (0, 0))
+        pygame.display.flip()
+    main_sound.stop()
+    return False
