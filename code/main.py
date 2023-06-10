@@ -6,7 +6,7 @@ from intro import wyswietlintro
 from slider import slider_function
 import random
 import cv2
-
+from input import input_box
 class Game:
 	
 	def __init__(self):		 
@@ -57,13 +57,15 @@ class Game:
 		#Przycisk Intro
 		Intro_surf = self.Button_Font.render(str('Intro'),False,'red')
 		#Przyciks Kontynułuj 
-		Continue_surf = self.Button_Font.render(str('kontynuuj'),False,'white')
+		Continue_surf = self.Button_Font.render(str('kontynuj'),False,'white')
 		#Przyciks Start
 		Start_surf = self.Button_Font.render(str('Start'),False,'white')
 		#Przyciks Opcjef
 		Opcje_surf = self.Button_Font.render(str('Opcje'),False,'#6719b5')
 		#Przyciks Koniec
 		Konie_surf = self.Button_Font.render(str('Koniec'),False,'#75a832')
+		#Menu
+		Menu_surf = self.Button_Font.render(str('Menu'),False,'#75a832')
   
 		#przyciski
 		#Start_img = pygame.image.load('../graphics/buttons/Start.png').convert_alpha()
@@ -74,6 +76,8 @@ class Game:
 		IntroButton =Button(WIDTH / 2.5, HEIGTH/1.8, Intro_surf, 0.8)
 		#Exit_img = pygame.image.load('../graphics/buttons/Koniec.png').convert_alpha()
 		ExitButton =Button(WIDTH / 2.6, HEIGTH/1.5, Konie_surf, 0.8)
+		#Menu
+		MenuButton =Button(WIDTH / 2.5, HEIGTH/3, Menu_surf, 0.8)
   
 		#Studios
 		display_time = 2500
@@ -153,11 +157,13 @@ class Game:
 							self.isIntro = wyswietlintro(self.screen,self.clock)
 							self.main_sound.play(loops = -1)
 					else:
-						# Opcje {#873, 4} 
+						# Opcje {#873, 7} 
 						#self.MusicVolume = self.slider.slider(self.screen,event,self.MusicVolume,WIDTH/2,300,300)
-						self.MusicVolume = slider_function(self.screen,event,MusicVolume,WIDTH/2,HEIGTH/2,300,0,2)
+						if MenuButton.draw(self.screen):
+							self.isOptions = False
+						#self.MusicVolume = input_box(self.screen, self.font_advice, 100, 100, 200, 32)
 						self.main_sound.set_volume(self.MusicVolume)
-				
+						
 				if isStart == True:				
 					# Menu W Grze 25252525
 					if self.isOptions == False:
@@ -187,7 +193,8 @@ class Game:
 								pygame.quit()
 								sys.exit()
 					else:
-						pass
+						if MenuButton.draw(self.screen):
+							self.isOptions = False
 			#przyciks Restat Po śmierci
 			if self.level.player.isDead == True:
 				Restart_img = pygame.image.load('../graphics/buttons/Restart.png').convert_alpha()
