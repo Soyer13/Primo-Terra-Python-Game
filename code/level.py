@@ -41,11 +41,13 @@ class Level:
 			'grass': import_csv_layout('../map/map_Grass.csv'),
 			'object': import_csv_layout('../map/map_Objects.csv'),
    			'entities': import_csv_layout('../map/map_Entities.csv'),
+			'nadajnik': import_csv_layout('../map/map_nadajnik.csv'),
 			
 		}
 		graphics = {
 			'grass': import_folder('../graphics/grass'),
-			'objects': import_folder('../graphics/objects')
+			'objects': import_folder('../graphics/objects'),
+			'nadajnik': import_folder('../graphics/tower')
 		
 		}
 
@@ -78,13 +80,12 @@ class Level:
 						if style == 'grass':
 							print("GRASS")
 							random_grass_image = choice(graphics['grass'])
-							#print(random_grass_image, "odejidew")
+							
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites,self.attackable_sprites],'grass',random_grass_image)
 
 						if style == 'object':
 
-							# co = graphics['objects'][27]
-							# print(x)
+							
 						
 							print(col)
 							graphicsS = graphics['objects'][int(col)]
@@ -96,8 +97,13 @@ class Level:
 
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 
-					
-
+						if style == 'nadajnik':
+							gra = graphics['nadajnik'][0]
+							width = gra.get_width()
+							height = gra.get_height()
+							scale = 2
+							gra = pygame.transform.scale(gra, (int(width * scale), int(height * scale)))
+							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'nadajnik',gra)
 
 						if style == 'entities':
 							if col == '394':
