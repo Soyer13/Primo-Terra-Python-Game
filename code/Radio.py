@@ -33,6 +33,7 @@ class Radio():
             
     def radioPlay(self):
         self.play = True
-        
+        pygame.mixer.music.play()
     def radioStop(self):
         self.play = False
+        pygame.mixer.music.stop()

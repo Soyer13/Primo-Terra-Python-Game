@@ -98,6 +98,15 @@ class Game:
 		self.earth_surf = pygame.transform.scale(self.earth_surf, (WIDTH, HEIGTH))
 		self.earth_rect = self.Studio_surf.get_rect(topleft = (0,0))
 		self.earthisStart = False
+  
+		displayad_time = 3000
+		self.ad = True
+		self.ad_surf = pygame.image.load('../graphics/Reklama ECO BOT.png').convert()
+		self.ad_surf = pygame.transform.scale(self.ad_surf, (WIDTH, HEIGTH))
+		self.ad_rect = self.Studio_surf.get_rect(topleft = (0,0))
+		self.adisStart = False
+  
+  
 		isStart = False
 		while True:
 			for event in pygame.event.get():
@@ -184,9 +193,18 @@ class Game:
 									self.earth = False	
 								self.screen.blit(self.earth_surf,self.earth_rect)
 							else:
-								# uruchowniemie gry {#922 ,2}
-								self.screen.fill(WATER_COLOR) 
-								self.level.run()
+								if self.ad == True:
+									if self.adisStart == False:
+										startad_time = pygame.time.get_ticks()
+										self.adisStart = True
+									currentad_time = pygame.time.get_ticks()
+									if currentad_time - startad_time >= displayad_time:
+										self.ad = False	
+									self.screen.blit(self.ad_surf,self.ad_rect)
+								else:
+									# uruchowniemie gry {#922 ,2}
+									self.screen.fill(WATER_COLOR) 
+									self.level.run()
 						else:
 							self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
 							if ContinueButton.draw(self.screen):
