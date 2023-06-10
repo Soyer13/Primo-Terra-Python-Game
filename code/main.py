@@ -82,7 +82,15 @@ class Game:
 		self.Studio_surf = pygame.image.load('../graphics/DisconnectedStudios.png').convert()
 		self.Studio_surf = pygame.transform.scale(self.Studio_surf, (WIDTH, HEIGTH))
 		self.Studio_rect = self.Studio_surf.get_rect(topleft = (0,0))
-		
+  
+		#earth {#699,9}
+		displayearth_time = 1500
+		#startearth_time = pygame.time.get_ticks()
+		self.earth = True
+		self.earth_surf = pygame.image.load('../graphics/ZiemiaZanieczyszczona.png').convert()
+		self.earth_surf = pygame.transform.scale(self.earth_surf, (WIDTH, HEIGTH))
+		self.earth_rect = self.Studio_surf.get_rect(topleft = (0,0))
+		self.earthisStart = False
 		isStart = False
 		while True:
 			for event in pygame.event.get():
@@ -151,12 +159,24 @@ class Game:
 						self.main_sound.set_volume(self.MusicVolume)
 				
 				if isStart == True:				
-					# Menu W Grze {#234,16 }
+					# Menu W Grze 25252525
 					if self.isOptions == False:
-						if self.isPause == False:							
-							# uruchowniemie gry
-							self.screen.fill(WATER_COLOR) 
-							self.level.run()
+						if self.isPause == False:
+							
+							
+							#earth {#699 ,10}
+							if self.earth == True:
+								if self.earthisStart == False:
+									startearth_time = pygame.time.get_ticks()
+									self.earthisStart = True
+								currentearth_time = pygame.time.get_ticks()
+								if currentearth_time - startearth_time >= displayearth_time:
+									self.earth = False	
+								self.screen.blit(self.earth_surf,self.earth_rect)
+							else:
+								# uruchowniemie gry {#922 ,2}
+								self.screen.fill(WATER_COLOR) 
+								self.level.run()
 						else:
 							self.screen.blit(PrimoTerra_surf,PrimowTerra_rect )
 							if ContinueButton.draw(self.screen):
