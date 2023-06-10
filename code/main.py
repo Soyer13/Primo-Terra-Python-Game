@@ -265,7 +265,7 @@ class Game:
 											elif self.is7 == False:	
 						
 												if self.is8 == True:
-													
+													  
 													self.is8 =self.napis.napis(4000,'../graphics/Napisy/Napisy7.png',self.screen)
 												else:
 													pygame.quit()
