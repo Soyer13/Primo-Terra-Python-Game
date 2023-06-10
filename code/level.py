@@ -40,11 +40,13 @@ class Level:
 			'boundary': import_csv_layout('../map/map_FloorBlocks.csv'),
 			'grass': import_csv_layout('../map/map_Grass.csv'),
 			'object': import_csv_layout('../map/map_Objects.csv'),
-   			'entities': import_csv_layout('../map/map_Entities.csv')
+   			'entities': import_csv_layout('../map/map_Entities.csv'),
+			'details': import_csv_layout('../map/map_Details.csv')
 		}
 		graphics = {
 			'grass': import_folder('../graphics/Grass'),
 			'objects': import_folder('../graphics/objects')
+		
 		}
 
 		#Stawianie Gracza
@@ -90,11 +92,14 @@ class Level:
 							graphicsS = graphics['objects'][int(col)]
 							width = graphicsS.get_width()
 							height = graphicsS.get_height()
-							scale = 4
+							scale = 2
 							graphicsS = pygame.transform.scale(graphicsS, (int(width * scale), int(height * scale)))
 							surf = graphicsS
 
 							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
+
+					
+
 
 						if style == 'entities':
 							if col == '394':
@@ -102,7 +107,7 @@ class Level:
 							else:
 								if col == '390' or col == '391' or col == '392':
 									if col == '390': monster_name = 'trashbagEnemy'
-									elif col == '391': monster_name = 'spirit'
+									
 									elif col == '392': monster_name = 'trashcanEnemy'
 									Enemy(
 										monster_name,
