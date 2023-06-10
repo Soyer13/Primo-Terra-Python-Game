@@ -41,6 +41,7 @@ class Level:
 			'grass': import_csv_layout('../map/map_Grass.csv'),
 			'object': import_csv_layout('../map/map_Objects.csv'),
    			'entities': import_csv_layout('../map/map_Entities.csv')
+			
 		}
 		graphics = {
 			'grass': import_folder('../graphics/Grass'),
@@ -81,7 +82,7 @@ class Level:
 							graphicsS = graphics['objects'][int(col)]
 							width = graphicsS.get_width()
 							height = graphicsS.get_height()
-							scale = 4
+							scale = 2
 							graphicsS = pygame.transform.scale(graphicsS, (int(width * scale), int(height * scale)))
 							surf = graphicsS
 
